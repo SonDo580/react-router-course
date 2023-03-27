@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./Home";
 import NavBar from "./NavBar";
 import Players from "./Players";
+import TeamPage from "./TeamPage";
 import Teams from "./Teams";
 
 export default function App() {
@@ -14,6 +15,7 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/players" element={<Players />} />
           <Route path="/teams" element={<Teams />} />
+          <Route path="/:teamId" element={<TeamPage />} />
         </Routes>
       </div>
     </BrowserRouter>
