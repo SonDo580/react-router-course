@@ -15,7 +15,13 @@ function CustomLink({ to, children }) {
     : {};
 
   return (
-    <Link style={{ ...styles }} to={to}>
+    <Link
+      style={{ ...styles }}
+      to={{
+        pathname: to,
+        search: location.search,
+      }}
+    >
       {children}
     </Link>
   );
