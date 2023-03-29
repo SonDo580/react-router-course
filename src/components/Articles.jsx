@@ -1,5 +1,6 @@
 import { useParams, Outlet } from "react-router-dom";
 import useTeamsArticles from "../hooks/useTeamsArticles";
+import Loading from "./Loading";
 import SideBar from "./SideBar";
 
 export default function Articles() {
@@ -8,7 +9,7 @@ export default function Articles() {
   const { loading, response: articles } = useTeamsArticles(teamId);
 
   if (loading) {
-    return <p>LOADING...</p>;
+    return <Loading />;
   }
 
   return (

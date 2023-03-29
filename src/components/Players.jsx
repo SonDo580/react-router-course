@@ -1,5 +1,6 @@
 import { Outlet, useSearchParams } from "react-router-dom";
 import usePlayerNames from "../hooks/usePlayerNames";
+import Loading from "./Loading";
 import SideBar from "./SideBar";
 
 export default function Players() {
@@ -10,7 +11,7 @@ export default function Players() {
   const { response: names, loading } = usePlayerNames(teamId);
 
   if (loading) {
-    return null;
+    return <Loading />;
   }
 
   return (
