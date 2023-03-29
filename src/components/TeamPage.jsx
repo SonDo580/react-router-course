@@ -75,7 +75,7 @@ export default function TeamPage() {
         {articles.map((article) => (
           <li key={article.id}>
             <h4 className="article-title">
-              <Link to={`/articles/${slugify(article.title)}`}>
+              <Link to={`articles/${slugify(article.title)}`}>
                 {article.title}
               </Link>
             </h4>
