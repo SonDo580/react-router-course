@@ -1,4 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Article from "./Article";
+import Articles from "./Articles";
 import Home from "./Home";
 import NavBar from "./NavBar";
 import Player from "./Player";
@@ -22,6 +24,10 @@ export default function App() {
             <Route path=":teamId" element={<Team />} />
           </Route>
           <Route path="/:teamId" element={<TeamPage />} />
+          {/* No nested route here because TeamPage isn't in charge of rendering Articles */}
+          <Route path="/:teamId/articles" element={<Articles />}>
+            <Route path=":articleId" element={<Article />} />
+          </Route>
         </Routes>
       </div>
     </BrowserRouter>
