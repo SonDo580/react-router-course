@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, useRoutes } from "react-router-dom";
 
 import NavBar from "./NavBar";
 import Loading from "./Loading";
@@ -13,6 +13,49 @@ const Team = React.lazy(() => import("./Team"));
 const TeamPage = React.lazy(() => import("./TeamPage"));
 const Teams = React.lazy(() => import("./Teams"));
 
+function Routes() {
+  return useRoutes([
+    { path: "/", element: <Home /> },
+    {
+      path: "/players",
+      element: <Players />,
+      children: [
+        {
+          path: "",
+          element: <div className="sidebar-instruction">Select a player</div>,
+        },
+        { path: ":playerId", element: <Player /> },
+      ],
+    },
+    {
+      path: "/teams",
+      element: <Teams />,
+      children: [
+        {
+          path: "",
+          element: <div className="sidebar-instruction">Select a team</div>,
+        },
+        { path: ":teamId", element: <Team /> },
+      ],
+    },
+    {
+      path: "/:teamId",
+      element: <TeamPage />,
+    },
+    {
+      path: "/:teamId/articles",
+      element: <Articles />,
+      children: [
+        {
+          path: "",
+          element: <div className="sidebar-instruction">Select an article</div>,
+        },
+        { path: ":articleId", element: <Article /> },
+      ],
+    },
+  ]);
+}
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -20,41 +63,7 @@ export default function App() {
         <NavBar />
 
         <Suspense fallback={<Loading />}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/players" element={<Players />}>
-              <Route path=":playerId" element={<Player />} />
-              <Route
-                path=""
-                element={
-                  <div className="sidebar-instruction">Select a player</div>
-                }
-              />
-            </Route>
-
-            <Route path="/teams" element={<Teams />}>
-              <Route path=":teamId" element={<Team />} />
-              <Route
-                path=""
-                element={
-                  <div className="sidebar-instruction">Select a team</div>
-                }
-              />
-            </Route>
-
-            <Route path="/:teamId" element={<TeamPage />} />
-
-            {/* No nested route here because TeamPage isn't in charge of rendering Articles */}
-            <Route path="/:teamId/articles" element={<Articles />}>
-              <Route path=":articleId" element={<Article />} />
-              <Route
-                path=""
-                element={
-                  <div className="sidebar-instruction">Select an article</div>
-                }
-              />
-            </Route>
-          </Routes>
+          <Routes />
         </Suspense>
       </div>
     </BrowserRouter>
