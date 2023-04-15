@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, Navigate } from "react-router-dom";
 import useArticle from "../hooks/useArticle";
 import Loading from "./Loading";
 
@@ -7,16 +7,19 @@ export default function Article() {
 
   const { loading, response: article } = useArticle({ teamId, articleId });
 
-  return (
-    <div className="panel">
-      {loading ? (
-        <Loading />
-      ) : (
-        <article className="article">
-          <h1 className="header">{article.title}</h1>
-          <p>{article.body}</p>
-        </article>
-      )}
-    </div>
-  );
+  let body;
+  if (loading) {
+    body = <Loading />;
+  } else if (article === null) {
+    body = <Navigate to={`/${teamId}/articles`} />;
+  } else {
+    body = (
+      <article className="article">
+        <h1 className="header">{article.title}</h1>
+        <p>{article.body}</p>
+      </article>
+    );
+  }
+
+  return <div className="panel">{body}</div>;
 }
